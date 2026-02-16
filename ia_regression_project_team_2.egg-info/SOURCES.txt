@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+ia_regression_project_team_2.egg-info/PKG-INFO
+ia_regression_project_team_2.egg-info/SOURCES.txt
+ia_regression_project_team_2.egg-info/dependency_links.txt
+ia_regression_project_team_2.egg-info/requires.txt
+ia_regression_project_team_2.egg-info/top_level.txt

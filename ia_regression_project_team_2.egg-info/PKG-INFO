@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: ia-regression-project-team-2
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: jupyter>=1.1.1
+Requires-Dist: matplotlib>=3.10.8
+Requires-Dist: numpy>=2.4.2
+Requires-Dist: pandas>=3.0.0
+Requires-Dist: scikit-learn>=1.8.0
+Requires-Dist: seaborn>=0.13.2
+Requires-Dist: kagglehub>=1.0.0
+Requires-Dist: ipywidgets>=8.0.0
+
+# ia-regression-project-team-2
+
+```bash
+# Create virtual environment
+uv venv
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install dependencies
+uv sync
+
