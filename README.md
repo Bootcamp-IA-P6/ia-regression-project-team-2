@@ -19,7 +19,7 @@ source .venv/bin/activate
 uv sync
 ```
 
-## 🔹 Windows (PowerShell o CMD)
+## 🔹 Windows (PowerShell or CMD)
 
 #### Create virtual environment
 ```bash
@@ -34,4 +34,9 @@ uv venv
 #### Install dependencies from pyproject.toml
 ```bash
 uv sync
+```
+
+## To train the model
+```bash
+uv run train.py
 ```
