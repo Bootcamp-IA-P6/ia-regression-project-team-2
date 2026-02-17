@@ -1,10 +1,15 @@
 [project]
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 06fa3911ef0f4e3b6ef626cfcd3254f5802a2f82
 name = "ia-regression-project-team-2"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+<<<<<<< HEAD
     "jupyter>=1.1.1",
     "matplotlib>=3.10.8",
     "numpy>=2.4.2",
@@ -14,4 +19,29 @@ dependencies = [
     "kagglehub>=1.0.0",
     "ipywidgets>=8.0.0",
     "xgboost>=2.2.2",
+=======
+    "jupyterlab>=4.5.4",
+    "kagglehub>=1.0.0",
+=======
+name = "proyecto5-regresion"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "jupyter>=1.1.1",
+>>>>>>> dev
+    "matplotlib>=3.10.8",
+    "missingno>=0.5.2",
+    "numpy>=2.4.2",
+    "pandas>=3.0.0",
+<<<<<<< HEAD
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    
+=======
+    "seaborn>=0.13.2",
+>>>>>>> dev
+>>>>>>> 06fa3911ef0f4e3b6ef626cfcd3254f5802a2f82
 ]
