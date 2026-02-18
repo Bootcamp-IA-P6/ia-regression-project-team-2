@@ -22,3 +22,24 @@ Difference: 1.19%
 MAE (Euros): 331,501.73 €
 ------------------------------
 SUCCESS: Overfitting below 5%.
+
+
+
+model 3
+Training GradientBoostingRegressor...
+------------------------------
+R2 Score (Test): 0.9059
+MAE: 180,638.64 €
+RMSE: 331,415.94 €
+------------------------------
+
+--- OVERFITTING ANALYSIS ---
+R2 Train: 0.9553
+R2 Test:  0.9059
+Difference (Overfitting): 0.0494
+Overfitting objective achieved 4.94%
+
+--- Comparating mean prices (TEST) ---
+Real:     921,563.81 €
+Predicted: 890,233.21 €
+------------------------------

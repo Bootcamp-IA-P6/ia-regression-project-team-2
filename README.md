@@ -38,7 +38,7 @@ uv sync
 
 ## To train the model
 ```bash
-uv run train.py
+uv run model_training.py
 ```
 
 ## To run the app
