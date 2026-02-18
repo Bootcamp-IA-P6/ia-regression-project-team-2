@@ -8,13 +8,16 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.impute import SimpleImputer 
-from features import HouseFeatureAdder
+# from features import HouseFeatureAdder
 
 # LOAD DATASET
-df = pd.read_csv('./data_madrid/dataset-copy.csv')
+df = pd.read_csv('./data_madrid/newTest.csv')
+
+precioCasa = df[df['PrecioActual'] > 6000000]['PrecioActual'].count()
+print(precioCasa)
 
 # FEATURE ENGINEERING (Before splitting X and y) // Eliminamos columnas que no aportan valor(RUIDO)
-cols_to_drop = ['provincia', 'titulo', 'PrecioAnterior', 'planta', 'baños', 'tags', 'descripcion', 'Enlace', 'zona']
+cols_to_drop = ['Unnamed: 0','provincia', 'titulo', 'PrecioAnterior', 'planta', 'baños', 'tags', 'descripcion', 'Enlace', 'zona']
 df_clean = df.drop(columns=[c for c in cols_to_drop if c in df.columns])
 
 # Create 'accessibility_index' / He creado una nueva variable, que ayudaría al modelo a entender el porqué de la diferencia de precio entre pisos altos y bajos. (Esto nos daría una presición aún mayor)
@@ -23,9 +26,22 @@ if 'plantaN' in df_clean.columns and 'ascensor' in df_clean.columns:
     df_clean['plantaN'] = pd.to_numeric(df_clean.get('plantaN', 0), errors='coerce').fillna(0)
     df_clean['ascensor'] = pd.to_numeric(df_clean.get('ascensor', 0), errors='coerce').fillna(0)
 
+# Lógica de castigo y premio
+# if 'plantaN' in df_clean.columns and 'ascensor' in df_clean.columns:
+#     df_clean['castigo_ascensor'] = np.where(
+#         (df_clean['plantaN'] > 3) & (df_clean['ascensor'] == 0), 
+#         df_clean['plantaN'] * 2, 
+#         0
+#     )
+
+# if 'tipo_inmueble' in df_clean.columns:
+#     df_clean['es_exterior'] = df_clean['tipo_inmueble'].apply(lambda x: 1 if str(x).lower() == 'exterior' else 0)
+# else:
+#     df_clean['es_exterior'] = 0
 
 # Clean target
 df_clean = df_clean.dropna(subset=['PrecioActual'])
+df_clean = df_clean[df_clean['PrecioActual'] <= 6000000]
 
 # Define Features (X) and Target (y)
 X = df_clean.drop('PrecioActual', axis=1)
@@ -35,6 +51,10 @@ y = np.log1p(df_clean['PrecioActual'])  # Aplico el logaritmo, con esto reducimo
 # PREPROCESSING PIPELINE / Si el modelo encuentra algún valor nulo, lo sustituye por la media de la columna. (Esto ayuda a que todos tengan el mismo peso y evitar que el modelo se equivoque)
 numeric_features = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
 categorical_features = X.select_dtypes(include=['object']).columns.tolist()
+
+# Add new features to numeric_features
+# new_features = ['accessibility_index', 'rooms_per_meter', 'avg_room_size']
+# numeric_features.extend(new_features) 
 
 # Pipeline para columnas numéricas / (imputer: Si el modelo encuentra algún valor nulo, lo sustituye por la media de la columna.
 # scaler: Estandariza los datos, para que todos tengan el mismo peso y evitar que el modelo se equivoque)
@@ -60,7 +80,7 @@ preprocessor = ColumnTransformer(
 # (con esto conseguimos que el modelo sea más eficiente y preciso, al usarse una vez,
 # no se tendrá que volver a escribir el código de limpieza, el modelo ya sabrá limpiarse solo.)
 full_pipeline = Pipeline(steps=[
-    ('feature_generation', HouseFeatureAdder()),
+#    ('feature_generation', HouseFeatureAdder()),
     ('preprocessor', preprocessor),
     ('regressor', GradientBoostingRegressor(random_state=42))
 ])
@@ -78,6 +98,18 @@ param_distributions = {
 }
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+if 'plantaN' in X_train.columns and 'ascensor' in X_train.columns:
+    X_train['castigo_ascensor'] = np.where(
+        (X_train['plantaN'] > 3) & (X_train['ascensor'] == 0), 
+        X_train['plantaN'] * 2, 
+        0
+    )
+
+if 'tipo_inmueble' in X_train.columns:
+    X_train['es_exterior'] = X_train['tipo_inmueble'].apply(lambda x: 1 if str(x).lower() == 'exterior' else 0)
+else:
+    X_train['es_exterior'] = 0
 
 # RandomizedSearchCV: Busca los mejores hiperparámetros para el modelo.
 # n_iter: Número de combinaciones a probar.

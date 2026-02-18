@@ -40,3 +40,8 @@ uv sync
 ```bash
 uv run train.py
 ```
+
+## To run the app
+```bash
+uv run streamlit run app.py
+```
