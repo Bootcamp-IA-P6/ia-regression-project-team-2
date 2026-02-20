@@ -24,8 +24,8 @@ with st.form("form_prediccion"):
     col1, col2 = st.columns(2)
 
     with col1:
-        metros = st.number_input("Metros cuadrados", 20, 2000, 80)
-        habitaciones = st.number_input("Habitaciones", 1, 15, 3)
+        metros = st.number_input("Metros cuadrados", 20, 2000, 60)
+        habitaciones = st.number_input("Habitaciones", 1, 15, 2)
         
         tipo_label = st.selectbox(
             "Tipo de vivienda",
