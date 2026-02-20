@@ -89,5 +89,5 @@ print(f"Real:     {y_test_eur.mean():,.2f} €")
 print(f"Predicted: {pred_test_eur.mean():,.2f} €")
 print("-" * 30)
 
-joblib.dump(model, "house_price_model.pkl")
+joblib.dump(model, "./model/house_price_model.pkl")
 print("Model saved as 'house_price_model.pkl'")

@@ -38,10 +38,11 @@ uv sync
 
 ## To train the model
 ```bash
-uv run model_training.py
+uv run model/model_training.py
 ```
 
 ## To run the app
 ```bash
-uv run streamlit run app.py
+uv run streamlit run streamlit/app.py
+
 ```

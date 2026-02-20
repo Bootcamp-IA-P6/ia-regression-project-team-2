@@ -5,3 +5,4 @@ __pycache__
 house_price_model.pkl
 .pkl
 user_queries_log.csv
+.__pycache__

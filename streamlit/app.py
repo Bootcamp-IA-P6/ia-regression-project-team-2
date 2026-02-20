@@ -3,18 +3,26 @@ import pandas as pd
 import numpy as np
 import joblib
 import os
-from features import ZONAS_DATA, PRESTIGIO_TIPO, calcular_castigo_ascensor, FEATURES_LIST
+import sys
+
+root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if root_path not in sys.path:
+    sys.path.append(root_path)
+
+from model.features import ZONAS_DATA, PRESTIGIO_TIPO,  calcular_castigo_ascensor, FEATURES_LIST
+
+
 
 st.set_page_config(page_title="Madrid Real Estate Predictor", layout="wide")
 
 @st.cache_resource
 def load_model():
-    return joblib.load('house_price_model.pkl')
-
+    model_path = os.path.join(root_path, 'model', 'house_price_model.pkl')
+    return joblib.load(model_path)
 try:
     model = load_model()
 except:
-    st.error("Error finding 'house_price_model.pkl'. Run train.py first.")
+    st.error("Error finding 'house_price_model.pkl'. Run model_training.py first.")
     st.stop()
 
 st.title("🏠 Madrid House Price Predictor")
@@ -81,6 +89,6 @@ if submit:
     if castigo < 0:
         st.warning(f"The price has a negative adjustment for being a {plantaN} without an elevator.")
 
-    log_file = "user_queries_log.csv"
+    log_file = "results_queries/user_queries_log.csv"
     input_df["predicted_price"] = pred_eur
     input_df.to_csv(log_file, mode="a", header=not os.path.exists(log_file), index=False)
