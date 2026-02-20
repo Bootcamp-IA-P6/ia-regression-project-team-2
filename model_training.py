@@ -75,6 +75,7 @@ overfitting = r2_train - r2_test
 
 print("-" * 30)
 print(f"R2 Score (Test): {r2_test:.4f}")
+print(f"R2 Score (Train): {r2_train:.4f}")
 print(f"MAE: {mean_absolute_error(y_test_eur, pred_test_eur):,.2f} €")
 print(f"RMSE: {np.sqrt(mean_squared_error(y_test_eur, pred_test_eur)):,.2f} €")
 print("-" * 30)
