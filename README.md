@@ -28,10 +28,20 @@ uv venv
 
 #### Activate virtual environment
 ```bash
-.venv\Scripts\activate
+source .venv/Scripts/activate
 ```
 
 #### Install dependencies from pyproject.toml
 ```bash
 uv sync
+```
+
+## 🔹 To train the model
+```bash
+uv run model_training.py
+```
+
+## 🔹 To run the app
+```bash
+uv run streamlit run app.py
 ```
