@@ -1,20 +1,8 @@
-<<<<<<< HEAD
 .venv
 __pycache__
 .env
 .DS_Store
-=======
-# macOS
-.DS_Store
-
-# Python
-.venv/
-__pycache__/
-*.pyc
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Claude
-.claude/
->>>>>>> dev
+house_price_model.pkl
+.pkl
+user_queries_log.csv
+.__pycache__
