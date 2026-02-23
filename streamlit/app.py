@@ -13,7 +13,7 @@ from model.features import ZONAS_DATA, PRESTIGIO_TIPO,  calcular_castigo_ascenso
 
 
 
-st.set_page_config(page_title="Madrid Real Estate Predictor", layout="wide")
+st.set_page_config(page_title="Sistema de precios de Viviendas — Madrid", page_icon="🏠", layout="wide")
 
 @st.cache_resource
 def load_model():
@@ -25,40 +25,63 @@ except:
     st.error("Error finding 'house_price_model.pkl'. Run model_training.py first.")
     st.stop()
 
-st.title("🏠 Madrid House Price Predictor")
-st.markdown("Calculate the market price based on historical district data.")
+with st.sidebar:
+    st.header("About this model")
+    st.markdown("""
+    Trained on **11,826 listings** from Idealista Madrid.
+
+    **Algorithm:** Gradient Boosting Regressor
+    
+    **R² score:** 0.91
+    
+    **Mean error:** ±180,000 €
+
+    **Districts covered:** 21 districts of Madrid
+    
+    **Price range:** up to 6,000,000 €
+    """)
+    st.markdown("---")
+    st.caption("Data source: Idealista Madrid (Kaggle)")
+
+st.title("🏠 Predictor de Precios de Vivienda en Madrid")
+st.markdown("Calcula el precio estimado de mercado basado en datos históricos de los distritos de Madrid.")
+st.markdown("---")
 
 with st.form("form_prediccion"):
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
-        metros = st.number_input("Metros cuadrados", 20, 2000, 60)
+        st.markdown("**📐 Tamaño**")
+        metros = st.number_input("Superficie (m²)", 20, 2000, 60)
         habitaciones = st.number_input("Habitaciones", 1, 15, 2)
-        
+
+    with col2:
+        st.markdown("**🏘️ Inmueble**")
         tipo_label = st.selectbox(
-            "Tipo de vivienda",
-            options=[k.capitalize() for k in PRESTIGIO_TIPO.keys()]
+            "Tipo de inmueble",
+            options=["Estudio", "Piso", "Ático", "Dúplex", "Casa", "Chalet"]
         )
-        
         zona_label = st.selectbox(
-            "Distrito de Madrid",
+            "Distrito",
             options=list(ZONAS_DATA.keys())
         )
 
-    with col2:
-        plantaN = st.number_input("Planta", 0, 50, 1)
-        asc = st.selectbox("Ascensor", ["Si", "No"])
-        ascensor = 1 if asc == "Si" else 0
-        
-        loc = st.selectbox("Localización", ["Exterior", "Interior"])
-        es_exterior = 1 if loc == "Exterior" else 0
+    with col3:
+        st.markdown("**🏢 Edificio**")
+        plantaN = st.number_input("Planta", 0, 50, 1, help="Planta 0 = planta baja")
+        asc = st.selectbox("Ascensor", ["Yes", "No"], help="Afecta al precio a partir de la planta 3")
+        loc = st.selectbox("Localizacion", ["Exterior", "Interior"])
 
-    submit = st.form_submit_button("💰 Calculate estimated price")
+    ascensor = 1 if (asc or "No") == "Yes" else 0
+    es_exterior = 1 if (loc or "Exterior") == "Exterior" else 0
+
+    submit = st.form_submit_button("💰 Calcular precio estimado")
 
 if submit:
-    zona_id = ZONAS_DATA[zona_label]['id']
-    zona_prestigio = ZONAS_DATA[zona_label]['prestigio']
-    tipo_prestigio = PRESTIGIO_TIPO[tipo_label.lower()]
+    zona_id = ZONAS_DATA[zona_label or "Salamanca"]['id']
+    zona_prestigio = ZONAS_DATA[zona_label or "Salamanca"]['prestigio']
+    TIPO_A_PRESTIGIO = {"Estudio": 1, "Piso": 2, "Ático": 3, "Dúplex": 3, "Casa": 4, "Chalet": 4}
+    tipo_prestigio = TIPO_A_PRESTIGIO[tipo_label or "Piso"]
     castigo = calcular_castigo_ascensor(plantaN, ascensor)
 
     input_df = pd.DataFrame([{
@@ -81,13 +104,18 @@ if submit:
     st.markdown("---")
     c1, c2 = st.columns(2)
     with c1:
-        st.subheader(f"Estimated price for {zona_label}")
-        st.header(f"{pred_eur:,.2f} €")
+        st.metric(
+            label=f"Precio estimado en {zona_label}",
+            value=f"{pred_eur:,.0f} €"
+        )
     with c2:
-        st.info(f"Price per m²: {pred_eur/metros:,.2f} €/m²")
+        st.metric(
+            label="Precio por m²",
+            value=f"{pred_eur/metros:,.0f} €/m²"
+        )
 
     if castigo < 0:
-        st.warning(f"The price has a negative adjustment for being a {plantaN} without an elevator.")
+        st.warning(f"⚠️ Precio ajustado a la baja: planta {int(plantaN)} sin ascensor.")
 
     log_file = "results_queries/user_queries_log.csv"
     input_df["predicted_price"] = pred_eur
