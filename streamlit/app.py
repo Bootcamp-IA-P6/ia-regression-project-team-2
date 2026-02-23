@@ -27,7 +27,7 @@ except:
 
 with st.sidebar:
     st.header("About this model")
-    st.markdown("""
+    st.markdown(r"""
     Trained on **11,826 listings** from Idealista Madrid.
 
     **Algorithm:** Gradient Boosting Regressor
@@ -51,12 +51,12 @@ with st.form("form_prediccion"):
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown("**📐 Tamaño**")
+        st.markdown(r"**📐 Tamaño**")
         metros = st.number_input("Superficie (m²)", 20, 2000, 60)
         habitaciones = st.number_input("Habitaciones", 1, 15, 2)
 
     with col2:
-        st.markdown("**🏘️ Inmueble**")
+        st.markdown(r"**🏘️ Inmueble**")
         tipo_label = st.selectbox(
             "Tipo de inmueble",
             options=["Estudio", "Piso", "Ático", "Dúplex", "Casa", "Chalet"]
@@ -67,7 +67,7 @@ with st.form("form_prediccion"):
         )
 
     with col3:
-        st.markdown("**🏢 Edificio**")
+        st.markdown(r"**🏢 Edificio**")
         plantaN = st.number_input("Planta", 0, 50, 1, help="Planta 0 = planta baja")
         asc = st.selectbox("Ascensor", ["Yes", "No"], help="Afecta al precio a partir de la planta 3")
         loc = st.selectbox("Localizacion", ["Exterior", "Interior"])
