@@ -30,7 +30,6 @@ jobs:
       # Si un test falla, el proceso se detiene aquí y nos avisa.
       - name: Install dependencies and run tests
         run: |
-          cd ia-regression-project-team-2
           uv sync
           PYTHONPATH=. uv run pytest test/prediction_test.py
 
