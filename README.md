@@ -38,7 +38,7 @@ uv venv
 
 #### Activate virtual environment
 ```bash
-.venv\Scripts\activate
+source .venv/Scripts/activate
 ```
 
 #### Install dependencies from pyproject.toml
