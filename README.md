@@ -1,5 +1,9 @@
 # ia-regression-project-team-2
 
+Render page to try the project
+```bash
+https://ia-regression-project-team-2.onrender.com
+```
 
 ## 🔹 Open the app with Docker
 
