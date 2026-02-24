@@ -1,0 +1,45 @@
+first one
+
+Training model...
+------------------------------
+R² Train: 0.7915
+R² Test: 0.7493
+Difference (Overfitting): 4.22%
+MAE: 338001.46
+RMSE: 625304.58
+------------------------------
+SUCCESS: Overfitting is below 5% threshold.
+
+///
+
+second one
+
+Training model (Log-Price)...
+------------------------------
+R² Train: 0.8076
+R² Test: 0.7958
+Difference: 1.19%
+MAE (Euros): 331,501.73 €
+------------------------------
+SUCCESS: Overfitting below 5%.
+
+
+
+model 3
+Training GradientBoostingRegressor...
+------------------------------
+R2 Score (Test): 0.9059
+MAE: 180,638.64 €
+RMSE: 331,415.94 €
+------------------------------
+
+--- OVERFITTING ANALYSIS ---
+R2 Train: 0.9553
+R2 Test:  0.9059
+Difference (Overfitting): 0.0494
+Overfitting objective achieved 4.94%
+
+--- Comparating mean prices (TEST) ---
+Real:     921,563.81 €
+Predicted: 890,233.21 €
+------------------------------
