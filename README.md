@@ -9,7 +9,7 @@ docker build -t house_price_model:v1 .
 ```
 Run docker image:
 ```bash
-docker run -p 8000:8000 house_price_model:v1 
+docker run -p 10000:10000 house_price_model:v1 
 ```
 
 ## 🔹 macOS / Linux
