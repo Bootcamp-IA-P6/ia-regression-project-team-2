@@ -30,7 +30,7 @@ jobs:
       # Si un test falla, el proceso se detiene aquí y nos avisa.
       - name: Install dependencies and run tests
         run: |
-          cd house_price_prediction
+          cd ia-regression-project-team-2
           uv sync
           PYTHONPATH=. uv run pytest test/prediction_test.py
 
@@ -44,6 +44,6 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
-          context: house_price_prediction
+          context: ia-regression-project-team-2
           push: false
           tags: house-price-prediction:latest
