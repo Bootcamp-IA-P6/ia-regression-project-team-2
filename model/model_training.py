@@ -11,7 +11,7 @@ from sklearn.impute import SimpleImputer
 from features import preprocess_dataframe, FEATURES_LIST #Importamos todas las características que queremos aplicar al modelo.
 
 print("Loading data...")
-df = pd.read_csv('./data_madrid/houss_clean.csv')
+df = pd.read_csv('./data_madrid/houses_clean.csv')
 
 cols_to_drop = ['Unnamed: 0','provincia','titulo','PrecioAnterior','planta','baños','tags','descripcion','Enlace']
 df = df.drop(columns=[c for c in cols_to_drop if c in df.columns])
