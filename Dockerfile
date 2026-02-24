@@ -24,7 +24,7 @@ RUN uv sync --frozen --no-install-project
 COPY . .
 
 # Exponemos el puerto de FastAPI
-EXPOSE 8000
+EXPOSE 10000
 
 # Arrancamos la API usando el entorno virtual gestionado por uv
-CMD ["uv", "run", "streamlit", "run", "streamlit/app.py", "--server.port", "8000"]
+CMD ["uv", "run", "streamlit", "run", "streamlit/app.py", "--server.port", "10000"]
